@@ -11,6 +11,7 @@ const c = require('../utils/apiCodes');
 exports.load = async (req, res, next, id) => {
   try {
     const person = await Person.get(id);
+    console.log(person);
     req.locals = { person };
     return next();
   } catch (error) {
@@ -19,13 +20,20 @@ exports.load = async (req, res, next, id) => {
 };
 
 /**
- * Get person
+ * Get person.
+ *
  * @public
  */
-exports.get = (req, res) => res.json(req.locals.person.transform());
+exports.get = (req, res) =>
+  res.json({
+    code: c.S_GETTING_PERSON.code,
+    message: c.S_GETTING_PERSON.message,
+    data: req.locals.person.transform(),
+  });
 
 /**
- * Create new person
+ * Create new person.
+ *
  * @public
  */
 exports.create = async (req, res, next) => {
@@ -44,7 +52,8 @@ exports.create = async (req, res, next) => {
 };
 
 /**
- * Update existing person
+ * Update existing person.
+ *
  * @public
  */
 exports.update = (req, res, next) => {
@@ -56,7 +65,7 @@ exports.update = (req, res, next) => {
     .then((savedPerson) =>
       res.status(httpStatus.OK).json({
         code: c.S_PERSON_UPDATED.code,
-        message: c.S_PERSON_UPDATED.messages,
+        message: c.S_PERSON_UPDATED.message,
         data: savedPerson.transform(),
       })
     )
@@ -64,15 +73,35 @@ exports.update = (req, res, next) => {
 };
 
 /**
- * Get person list
+ * Get person list.
+ *
  * @public
  */
 exports.list = async (req, res, next) => {
   try {
     const persons = await Person.list(req.query);
     const transformedPersons = persons.map((person) => person.transform());
-    res.json(transformedPersons);
+    res.status(httpStatus.OK);
+    res.json({
+      code: c.S_PERSON_LISTED.code,
+      message: c.S_PERSON_LISTED.message,
+      data: transformedPersons,
+    });
   } catch (error) {
     next(error);
   }
+};
+
+/**
+ * Delete person.
+ *
+ * @public
+ */
+exports.remove = (req, res, next) => {
+  const { person } = req.locals;
+
+  person
+    .remove()
+    .then(() => res.status(httpStatus.NO_CONTENT).end())
+    .catch((e) => next(e));
 };

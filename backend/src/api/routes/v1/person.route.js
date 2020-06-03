@@ -8,9 +8,9 @@ const { listPersons, createPerson, updatePerson } = require('../../validations/p
 const router = express.Router();
 
 /**
- * Load user when API with userId route parameter is hit
+ * Load person when API with personId route parameter is hit
  */
-router.param('userId', controller.load);
+router.param('personId', controller.load);
 
 router
   .route('/')
@@ -51,7 +51,26 @@ router
    *
    * @apiError (Bad Request 400)   ValidationError  Some parameters may contain invalid values
    */
-  .post(validate(createPerson), controller.create)
+  .post(validate(createPerson), controller.create);
+
+router
+  .route('/:personId')
+  /**
+   * @api {get} v1/persons/:id Get Person
+   * @apiDescription Get person information
+   * @apiVersion 1.0.0
+   * @apiName GetPerson
+   * @apiGroup Person
+   * @apiPermission guest
+   *
+   * @apiSuccess {String}  id         Person's id
+   * @apiSuccess {String}  name       Person's name
+   * @apiSuccess {String}  email      Person's email
+   * @apiSuccess {Date}    createdAt  Timestamp
+   *
+   * @apiError (Not Found 404)    NotFound     Person does not exist
+   */
+  .get(controller.get)
 
   /**
    * @api {patch} v1/persons/:id Update Person
@@ -72,6 +91,20 @@ router
    * @apiError (Bad Request 400)  ValidationError  Some parameters may contain invalid values
    * @apiError (Not Found 404)    NotFound     Person does not exist
    */
-  .patch(validate(updatePerson), controller.update);
+  .patch(validate(updatePerson), controller.update)
+
+  /**
+   * @api {patch} v1/persons/:personId Delete Person
+   * @apiDescription Delete a person
+   * @apiVersion 1.0.0
+   * @apiName DeletePerson
+   * @apiGroup Person
+   * @apiPermission guest
+   *
+   * @apiSuccess (No Content 204)  Successfully deleted
+   *
+   * @apiError (Not Found 404)    NotFound      Person does not exist
+   */
+  .delete(controller.remove);
 
 module.exports = router;

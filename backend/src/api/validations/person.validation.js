@@ -6,12 +6,14 @@ module.exports = {
    *
    */
   listPersons: {
-    query: Joi.object({
-      page: Joi.number().min(1),
-      perPage: Joi.number().min(1).max(100),
-      name: Joi.string(),
-      email: Joi.string(),
-    }),
+    list: {
+      query: Joi.object({
+        page: Joi.number().min(1),
+        perPage: Joi.number().min(1).max(100),
+        name: Joi.string(),
+        email: Joi.string(),
+      }),
+    },
   },
 
   /**
@@ -19,11 +21,10 @@ module.exports = {
    *
    */
   createPerson: {
-    createPerson: {
+    create: {
       body: Joi.object({
         email: Joi.string().email().required(),
         name: Joi.string().max(128),
-        // uuid: Joi.string().max(36),
       }),
     },
   },
@@ -33,14 +34,16 @@ module.exports = {
    *
    */
   updatePerson: {
-    body: Joi.object({
-      email: Joi.string().email(),
-      name: Joi.string().max(128),
-    }),
-    params: Joi.object({
-      personId: Joi.string()
-        .regex(/^[a-fA-F0-9]{24}$/)
-        .required(),
-    }),
+    update: {
+      body: Joi.object({
+        email: Joi.string().email(),
+        name: Joi.string().max(128),
+      }),
+      params: Joi.object({
+        personId: Joi.string()
+          .regex(/^[a-fA-F0-9]{24}$/)
+          .required(),
+      }),
+    },
   },
 };

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { omitBy, isNil } = require('lodash');
 const httpStatus = require('http-status');
 const uuidv4 = require('uuid').v4;
 const validator = require('validator');
@@ -103,6 +104,23 @@ personSchema.statics = {
     } catch (error) {
       throw error;
     }
+  },
+
+  /**
+   * List persons in descending order of 'createdAt' timestamp.
+   *
+   * @param {number} skip - Number of persons to be skipped.
+   * @param {number} limit - Limit number of persons to be returned.
+   * @returns {Promise<Person[]>}
+   */
+  list({ page = 1, perPage = 30, name, email }) {
+    const options = omitBy({ name, email }, isNil);
+
+    return this.find(options)
+      .sort({ createdAt: -1 })
+      .skip(perPage * (page - 1))
+      .limit(perPage * 1)
+      .exec();
   },
 
   /**

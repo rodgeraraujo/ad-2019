@@ -8,4 +8,6 @@ module.exports = {
   E_NOT_FOUND: { code: 'E_NOT_FOUND', status: 404, message: 'Resource not found' },
   S_PERSON_CREATED: { code: 'S_PERSON_CREATED', status: 201, message: 'Person created' },
   S_PERSON_UPDATED: { code: 'S_PERSON_UPDATED', status: 200, message: 'Person updated' },
+  S_PERSON_LISTED: { code: 'S_PERSON_LISTED', status: 200, message: 'Listed persons' },
+  S_GETTING_PERSON: { code: 'S_GETTING_PERSON', status: 200, message: 'Getting person' },
 };
