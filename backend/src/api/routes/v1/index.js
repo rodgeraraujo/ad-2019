@@ -1,4 +1,6 @@
 const express = require('express');
+const personRoutes = require('./user.route');
+
 const c = require('../../util/apiCodes');
 
 const router = express.Router();
@@ -13,5 +15,8 @@ router.get('/status', (req, res) =>
     message: c.S_API_STATUS.message,
   })
 );
+
+// Person routes
+router.use('/persons', personRoutes);
 
 module.exports = router;
