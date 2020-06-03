@@ -1,6 +1,5 @@
 const path = require('path');
 
-// Import .env variables
 require('dotenv-safe').load({
   path: path.join(__dirname, '../../.env'),
   sample: path.join(__dirname, '../../.env.example'),
