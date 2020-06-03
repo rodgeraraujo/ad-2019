@@ -6,4 +6,6 @@ module.exports = {
   E_PERSON_NOT_FOUND: { code: 'E_PERSON_NOT_FOUND', status: 404, message: 'Person does not exist' },
   E_DUPLICATE_EMAIL: { code: 'E_DUPLICATE_EMAIL', status: 409, message: 'Validation error' },
   E_NOT_FOUND: { code: 'E_NOT_FOUND', status: 404, message: 'Resource not found' },
+  S_PERSON_CREATED: { code: 'S_PERSON_CREATED', status: 201, message: 'Person created' },
+  S_PERSON_UPDATED: { code: 'S_PERSON_UPDATED', status: 200, message: 'Person updated' },
 };
