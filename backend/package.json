@@ -1,0 +1,28 @@
+{
+  "name": "ad-2019-backend",
+  "version": "1.0.0",
+  "description": "Desafio Adireto Brasil",
+  "author": "Rogério Araújo <rogerio.araujo@mail.com>",
+  "main": "src/index.js",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8",
+    "yarn": "*"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:rodgeraraujo/ad-2019.git"
+  },
+  "keywords": [
+    "express",
+    "node",
+    "node.js",
+    "mongodb",
+    "mongoose",
+    "REST",
+    "API"
+  ],
+  "dependencies": {},
+  "devDependencies": {}
+}
