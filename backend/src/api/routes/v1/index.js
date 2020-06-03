@@ -1,7 +1,7 @@
 const express = require('express');
-const personRoutes = require('./user.route');
+const personRoutes = require('./person.route');
 
-const c = require('../../util/apiCodes');
+const c = require('../../utils/apiCodes');
 
 const router = express.Router();
 

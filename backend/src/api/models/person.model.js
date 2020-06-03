@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const httpStatus = require('http-status');
 const uuidv4 = require('uuid/v4');
 const APIError = require('../utils/apiError');
-const c = require('../util/apiCodes');
+const c = require('../utils/apiCodes');
 
 /**
  * Person Schema.
