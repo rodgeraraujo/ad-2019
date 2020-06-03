@@ -16,7 +16,6 @@ router.get('/status', (req, res) =>
   })
 );
 
-// Person routes
 router.use('/persons', personRoutes);
 
 module.exports = router;
