@@ -10,4 +10,10 @@ module.exports = {
   S_PERSON_UPDATED: { code: 'S_PERSON_UPDATED', status: 200, message: 'Person updated' },
   S_PERSON_LISTED: { code: 'S_PERSON_LISTED', status: 200, message: 'Listed persons' },
   S_GETTING_PERSON: { code: 'S_GETTING_PERSON', status: 200, message: 'Getting person' },
+  E_INSIFFICIENT_NUMBER: {
+    code: 'E_INSIFFICIENT_NUMBER',
+    status: 406,
+    message: 'Need a minimum of 4 people to carry out the draw',
+  },
+  S_DRAW_CREATED: { code: 'S_DRAW_CREATED', status: 202, message: 'The draw was successful' },
 };

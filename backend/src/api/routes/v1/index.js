@@ -1,5 +1,6 @@
 const express = require('express');
 const personRoutes = require('./person.route');
+const drawRoutes = require('./draw.route');
 
 const c = require('../../utils/apiCodes');
 
@@ -17,5 +18,6 @@ router.get('/status', (req, res) =>
 );
 
 router.use('/persons', personRoutes);
+router.use('/draw', drawRoutes);
 
 module.exports = router;
