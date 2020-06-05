@@ -13,6 +13,7 @@ const c = require('../utils/apiCodes');
  */
 const personSchema = new mongoose.Schema(
   {
+    uuid: { type: String, maxlength: 36, trim: true },
     email: {
       type: String,
       match: /^\S+@\S+\.\S+$/,

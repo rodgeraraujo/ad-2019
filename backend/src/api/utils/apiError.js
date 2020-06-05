@@ -23,6 +23,7 @@ class ExtendableError extends Error {
 class APIError extends ExtendableError {
   /**
    * Creates an API error.
+   *
    * @param {string} message - Error message.
    * @param {number} status - HTTP status code of error.
    * @param {string} code - API Code string of error.
@@ -44,6 +45,13 @@ class APIError extends ExtendableError {
       isPublic,
       stack,
     });
+    this.message = message;
+    this.status = status;
+    this.code = code;
+  }
+
+  toJSON() {
+    return { code: this.code, status: this.status, message: this.message };
   }
 }
 

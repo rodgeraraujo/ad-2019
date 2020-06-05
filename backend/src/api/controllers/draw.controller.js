@@ -1,9 +1,38 @@
 const httpStatus = require('http-status');
 
 const drawProvider = require('../services/drawProvider');
+const Draw = require('../models//draw.model');
+
 const APIError = require('../utils/apiError');
 
 const c = require('../utils/apiCodes');
+
+/**
+ * Load draw and append to req.
+ *
+ * @public
+ */
+exports.load = async (req, res, next, id) => {
+  try {
+    const draw = await Draw.get(id);
+    req.locals = { draw };
+    return next();
+  } catch (error) {
+    return next(error);
+  }
+};
+
+/**
+ * Get draw.
+ *
+ * @public
+ */
+exports.get = (req, res) =>
+  res.json({
+    code: c.S_GETTING_DRAW.code,
+    message: c.S_GETTING_DRAW.message,
+    data: req.locals.draw.transform(),
+  });
 
 /**
  * Returns success if draw was successful.
@@ -31,5 +60,25 @@ exports.create = async (req, res, next) => {
     });
   } catch (error) {
     return next(error);
+  }
+};
+
+/**
+ * Get draw list.
+ *
+ * @public
+ */
+exports.list = async (req, res, next) => {
+  try {
+    const draws = await Draw.list(req.query);
+    const transformedDraws = draws.map((draw) => draw.transform());
+    res.status(httpStatus.OK);
+    res.json({
+      code: c.S_DRAW_LISTED.code,
+      message: c.S_DRAW_LISTED.message,
+      data: transformedDraws,
+    });
+  } catch (error) {
+    next(error);
   }
 };

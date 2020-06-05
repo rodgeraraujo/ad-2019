@@ -11,7 +11,6 @@ const c = require('../utils/apiCodes');
 exports.load = async (req, res, next, id) => {
   try {
     const person = await Person.get(id);
-    console.log(person);
     req.locals = { person };
     return next();
   } catch (error) {

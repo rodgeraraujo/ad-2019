@@ -20,4 +20,7 @@ module.exports = {
     status: 202,
     message: 'The draw was create successful',
   },
+  S_DRAW_LISTED: { code: 'S_DRAW_LISTED', status: 200, message: 'Listed draws' },
+  S_GETTING_DRAW: { code: 'S_GETTING_DRAW', status: 200, message: 'Getting draw' },
+  E_DRAW_NOT_FOUND: { code: 'E_DRAW_NOT_FOUND', status: 404, message: 'Draw does not exist' },
 };

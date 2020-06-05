@@ -11,7 +11,7 @@ const c = require('../utils/apiCodes');
  *
  * @private
  */
-const darwSchema = new mongoose.Schema(
+const drawSchema = new mongoose.Schema(
   {
     uuid: { type: String, maxlength: 36, trim: true },
     data: [
@@ -52,7 +52,7 @@ const darwSchema = new mongoose.Schema(
  * Add pre-save hooks.
  *
  */
-darwSchema.pre('save', async function save(next) {
+drawSchema.pre('save', async function save(next) {
   try {
     this.uuid = uuidv4();
 
@@ -66,10 +66,10 @@ darwSchema.pre('save', async function save(next) {
  * Methods.
  *
  */
-darwSchema.method({
+drawSchema.method({
   transform() {
     const transformed = {};
-    const fields = ['id', 'name', 'email', 'createdAt'];
+    const fields = ['id', 'data', 'createdAt'];
 
     fields.forEach((field) => {
       transformed[field] = this[field];
@@ -82,7 +82,7 @@ darwSchema.method({
 /**
  * Statics
  */
-darwSchema.statics = {
+drawSchema.statics = {
   /**
    * Get draw by id.
    *
@@ -131,4 +131,4 @@ darwSchema.statics = {
 /**
  * @typedef Draw
  */
-module.exports = mongoose.model('Draw', darwSchema);
+module.exports = mongoose.model('Draw', drawSchema);
