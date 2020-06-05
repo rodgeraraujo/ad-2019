@@ -15,6 +15,14 @@ export default function CreatePerson() {
   const [email, setEmail] = useState('');
   const [persons, setPersons] = useState([]);
   const [loading, setLoading] = useState([]);
+  // const [alertMessage, setAlertMessage] = useState([]);
+  // {loading ? (
+  //   <h5></h5>
+  // ) : (
+  //   <h5 className="txt-blue">
+  //     <strong>Amigos salvos</strong>
+  //   </h5>
+  // )}
 
   useEffect((loading = true) => {
     setTimeout(function () {
@@ -33,8 +41,6 @@ export default function CreatePerson() {
     try {
       const response = await api.post('persons', { name, email });
 
-      persons = response.data.data;
-
       if (response.data.code == 'S_PERSON_CREATED') {
         alert('Amigo cadastrado');
       } else {
@@ -42,6 +48,25 @@ export default function CreatePerson() {
       }
 
       history.push('/');
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function haddleSecretFriend(e) {
+    e.preventDefault();
+    try {
+      const response = await api.post('draw');
+
+      if (response.data.code == 'E_INSIFFICIENT_NUMBER') {
+        alert('É necessário um número minimo de 3 amigos, para realizar o sorteio.');
+      }
+
+      if (response.data.code == 'S_DRAW_CREATED') {
+        alert('Sorteio realizado, cada amigo vai receber um email.');
+      } else {
+        alert('Ocorreu um erro ao tentar realizar o sorteio, tente novamente.');
+      }
     } catch (err) {
       console.log(err);
     }
@@ -67,7 +92,7 @@ export default function CreatePerson() {
           <div className="row sp-vert-sm">
             <div className="col c12">
               <div className="spacing-sm">
-                <button style={{ padding: ' 10px 37%' }} className="button warning">
+                <button style={{ padding: ' 10px 37%' }} className="button warning" onClick={haddleSecretFriend}>
                   Realizar sorteio
                 </button>
                 <h6 className="txt-red">
