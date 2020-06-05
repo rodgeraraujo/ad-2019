@@ -97,7 +97,7 @@ personSchema.statics = {
         return person;
       }
 
-      throw new APIError({
+      return new APIError({
         code: c.E_PERSON_NOT_FOUND.code,
         status: c.E_PERSON_NOT_FOUND.status,
         message: c.E_PERSON_NOT_FOUND.message,

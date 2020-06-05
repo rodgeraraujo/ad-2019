@@ -15,6 +15,9 @@ const c = require('../utils/apiCodes');
 exports.load = async (req, res, next, id) => {
   try {
     const draw = await Draw.get(id);
+
+    if (draw.status == 404) return res.json(draw.toJSON());
+
     req.locals = { draw };
     return next();
   } catch (error) {
@@ -44,11 +47,13 @@ exports.create = async (req, res, next) => {
     const resultDraw = await drawProvider.draw();
 
     if (!resultDraw) {
-      throw new APIError({
-        code: c.E_INSIFFICIENT_NUMBER.code,
-        status: httpStatus.UNPROCESSABLE_ENTITY,
-        message: c.E_INSIFFICIENT_NUMBER.message,
-      });
+      res.json(
+        new APIError({
+          code: c.E_INSIFFICIENT_NUMBER.code,
+          status: httpStatus.UNPROCESSABLE_ENTITY,
+          message: c.E_INSIFFICIENT_NUMBER.message,
+        }).toJSON()
+      );
     }
 
     res.status(httpStatus.OK);

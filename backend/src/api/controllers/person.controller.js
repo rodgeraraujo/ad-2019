@@ -11,6 +11,9 @@ const c = require('../utils/apiCodes');
 exports.load = async (req, res, next, id) => {
   try {
     const person = await Person.get(id);
+
+    if (person.status == 404) return res.json(person.toJSON());
+
     req.locals = { person };
     return next();
   } catch (error) {
@@ -23,12 +26,14 @@ exports.load = async (req, res, next, id) => {
  *
  * @public
  */
-exports.get = (req, res) =>
+exports.get = (req, res) => {
+  console.log(req.locals.person);
   res.json({
     code: c.S_GETTING_PERSON.code,
     message: c.S_GETTING_PERSON.message,
     data: req.locals.person.transform(),
   });
+};
 
 /**
  * Create new person.
@@ -46,7 +51,9 @@ exports.create = async (req, res, next) => {
       data: savedPerson.transform(),
     });
   } catch (error) {
-    next(Person.checkDuplicateEmail(error));
+    const err = Person.checkDuplicateEmail(error);
+    next(err);
+    res.json(err.toJSON());
   }
 };
 

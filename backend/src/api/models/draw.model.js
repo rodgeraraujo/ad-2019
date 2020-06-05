@@ -100,7 +100,7 @@ drawSchema.statics = {
         return draw;
       }
 
-      throw new APIError({
+      return new APIError({
         code: c.E_DRAW_NOT_FOUND.code,
         status: c.E_DRAW_NOT_FOUND.status,
         message: c.E_DRAW_NOT_FOUND.message,
