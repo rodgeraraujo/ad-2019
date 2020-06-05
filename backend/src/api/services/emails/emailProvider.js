@@ -22,11 +22,11 @@ transporter.verify((error) => {
  * Send email to secret friend.
  *
  */
-exports.sendSecretFriendEmail = async (secretFriend) => {
+exports.sendSecretFriendEmail = async (mailOptions) => {
   const email = new Email({
     views: { root: __dirname },
     message: {
-      from: emailConfig.emailSender,
+      from: `Amigo Secreto <${emailConfig.emailSender}>`,
     },
     send: true,
     transport: transporter,
@@ -36,11 +36,11 @@ exports.sendSecretFriendEmail = async (secretFriend) => {
     .send({
       template: 'secretFriend',
       message: {
-        to: secretFriend.email,
+        to: mailOptions.email,
       },
       locals: {
-        name: secretFriend.name,
-        secretFriendName: secretFriend.secretFriendName,
+        name: mailOptions.name,
+        secretFriendName: mailOptions.secretFriend.name,
       },
     })
     .catch(() => console.log('Error sending secret friend email'));

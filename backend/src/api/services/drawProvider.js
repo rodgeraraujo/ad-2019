@@ -1,6 +1,8 @@
 const Person = require('../models/person.model');
 const Draw = require('../models/draw.model');
 
+const emailProvider = require('../services/emails/emailProvider');
+
 /**
  * Returns a mixed array of friends.
  *
@@ -60,13 +62,26 @@ exports.draw = async () => {
         id: secretPerson.friend.id,
       },
     };
+
     drawSecretFriend.push(mailOptions);
-    promises.push(mailOptions);
+    promises.push(
+      new Promise((resolve) => {
+        emailProvider.sendSecretFriendEmail(mailOptions, function (err, info) {
+          if (err) {
+            resolve(err);
+            console.log(err);
+          } else {
+            resolve(info);
+            console.log(info);
+          }
+        });
+      })
+    );
   });
 
   const draw = new Draw({ data: drawSecretFriend });
   await draw.save();
 
   Promise.all(promises);
-  return promises;
+  return drawSecretFriend;
 };
