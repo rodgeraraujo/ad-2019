@@ -1,4 +1,5 @@
 const Person = require('../models/person.model');
+const Draw = require('../models/draw.model');
 
 /**
  * Returns a mixed array of friends.
@@ -31,8 +32,6 @@ exports.draw = async () => {
     return false;
   }
 
-  console.log(persons);
-
   let personArray = mixFriends(persons);
 
   let drawns = [];
@@ -43,24 +42,30 @@ exports.draw = async () => {
     while (drawns.length == index) {
       let person = toDraw[Math.floor(Math.random() * (1 + toDraw.length - 1 - 0)) + 0];
 
-      if (person.id !== p.id && drawns.indexOf(person.id) < 0) {
+      if (person._id !== p._id && drawns.indexOf(person._id) < 0) {
         p.friend = person;
-        drawns.push(person.id);
+        drawns.push(person._id);
       }
     }
   });
 
   let promises = [];
-  personArray.map((secretPerson) => {
+  let drawSecretFriend = [];
+  personArray.map(async (secretPerson) => {
     const mailOptions = {
-      friend: secretPerson.email,
+      name: secretPerson.name,
+      email: secretPerson.email,
       secretFriend: {
         name: secretPerson.friend.name,
         id: secretPerson.friend.id,
       },
     };
+    drawSecretFriend.push(mailOptions);
     promises.push(mailOptions);
   });
+
+  const draw = new Draw({ data: drawSecretFriend });
+  await draw.save();
 
   Promise.all(promises);
   return promises;

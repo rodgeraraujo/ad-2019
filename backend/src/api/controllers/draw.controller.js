@@ -13,7 +13,6 @@ const c = require('../utils/apiCodes');
 exports.create = async (req, res, next) => {
   try {
     const resultDraw = await drawProvider.draw();
-    console.log(resultDraw);
 
     if (!resultDraw) {
       throw new APIError({

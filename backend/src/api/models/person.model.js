@@ -65,7 +65,7 @@ personSchema.pre('save', async function save(next) {
 personSchema.method({
   transform() {
     const transformed = {};
-    const fields = ['id', 'name', 'email', 'uuid', 'createdAt'];
+    const fields = ['id', 'name', 'email', 'createdAt'];
 
     fields.forEach((field) => {
       transformed[field] = this[field];

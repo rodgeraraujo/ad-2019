@@ -15,5 +15,9 @@ module.exports = {
     status: 406,
     message: 'Need a minimum of 4 people to carry out the draw',
   },
-  S_DRAW_CREATED: { code: 'S_DRAW_CREATED', status: 202, message: 'The draw was successful' },
+  S_DRAW_CREATED: {
+    code: 'S_DRAW_CREATED',
+    status: 202,
+    message: 'The draw was create successful',
+  },
 };
