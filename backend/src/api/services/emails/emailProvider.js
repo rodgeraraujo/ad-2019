@@ -1,47 +1,29 @@
-const nodemailer = require('nodemailer');
-const Email = require('email-templates');
 const { emailConfig } = require('../../../config/vars');
-
-const transporter = nodemailer.createTransport({
-  port: emailConfig.port,
-  host: emailConfig.host,
-  auth: {
-    user: emailConfig.username,
-    pass: emailConfig.password,
-  },
-  secure: false,
-});
-
-transporter.verify((error) => {
-  if (error) {
-    console.log('Error with email connection');
-  }
-});
+const sendgridMail = require('@sendgrid/mail');
 
 /**
  * Send email to secret friend.
  *
  */
 exports.sendSecretFriendEmail = async (mailOptions) => {
-  const email = new Email({
-    views: { root: __dirname },
-    message: {
-      from: `Amigo Secreto <${emailConfig.emailSender}>`,
-    },
-    send: true,
-    transport: transporter,
-  });
+  const email = {
+    from: emailConfig.emailSender,
+    to: mailOptions.email,
+    subject: 'Resultado do sorteio do amigo secreto',
+    text: `
+    Olá ${mailOptions.name},
+    Seu amigo secreto é <strong>${mailOptions.secretFriend.name}<strong>.`,
+  };
 
-  email
-    .send({
-      template: 'secretFriend',
-      message: {
-        to: mailOptions.email,
-      },
-      locals: {
-        name: mailOptions.name,
-        secretFriendName: mailOptions.secretFriend.name,
-      },
+  sendgridMail.setApiKey(emailConfig.sendgridKey);
+
+  sendgridMail
+    .send(email)
+    .then(() => {
+      console.log('Message sent');
     })
-    .catch(() => console.log('Error sending secret friend email'));
+    .catch((error) => {
+      console.log(error.response.body);
+      // console.log(error.response.body.errors[0].message)
+    });
 };

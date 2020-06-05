@@ -12,10 +12,7 @@ module.exports = {
     uri: process.env.NODE_ENV === 'development' ? process.env.MONGO_URI_DEV : process.env.MONGO_URI,
   },
   emailConfig: {
-    host: process.env.EMAIL_HOST,
-    port: process.env.EMAIL_PORT,
-    username: process.env.EMAIL_USERNAME,
-    password: process.env.EMAIL_PASSWORD,
+    sendgridKey: process.env.SENDGRID_KEY,
     emailSender: process.env.EMAIL_SENDER,
   },
 };
