@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  ad-2019:
+    container_name: ad-2019
+    restart: unless-stopped
+    build: .
+    image: ad-2019
+    env_file:
+      - ./.env.development
+    volumes:
+      - .:/usr/src/ad-2019
+      - /usr/src/ad-2019/node_modules
+    ports:
+      - '3000:3000'
+    command: yarn dev
+    tty: true

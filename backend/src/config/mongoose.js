@@ -13,8 +13,6 @@ if (env === 'development') {
   mongoose.set('debug', true);
 }
 
-console.log(mongo.uri);
-
 /**
  * Connect to mongo database.
  *

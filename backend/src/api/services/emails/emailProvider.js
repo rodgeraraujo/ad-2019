@@ -20,10 +20,9 @@ exports.sendSecretFriendEmail = async (mailOptions) => {
   sendgridMail
     .send(email)
     .then(() => {
-      console.log('Message sent');
+      console.log('Message sent to ' + mailOptions.email);
     })
     .catch((error) => {
       console.log(error.response.body);
-      // console.log(error.response.body.errors[0].message)
     });
 };
